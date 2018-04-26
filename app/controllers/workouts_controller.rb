@@ -1,5 +1,8 @@
 class WorkoutsController < ApplicationController
   before_action :set_workout, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user
+
+  @comments = []
 
   # GET /workouts
   # GET /workouts.json
@@ -10,6 +13,7 @@ class WorkoutsController < ApplicationController
   # GET /workouts/1
   # GET /workouts/1.json
   def show
+    @exercise = Exercise.new
   end
 
   # GET /workouts/new
@@ -24,16 +28,12 @@ class WorkoutsController < ApplicationController
   # POST /workouts
   # POST /workouts.json
   def create
-    @workout = Workout.new(workout_params)
+    @workout = current_user.workouts.new(workout_params)
 
-    respond_to do |format|
-      if @workout.save
-        format.html { redirect_to @workout, notice: 'Workout was successfully created.' }
-        format.json { render :show, status: :created, location: @workout }
-      else
-        format.html { render :new }
-        format.json { render json: @workout.errors, status: :unprocessable_entity }
-      end
+    if @workout.save
+      redirect_to @workout
+    else
+      render :new
     end
   end
 
@@ -55,10 +55,21 @@ class WorkoutsController < ApplicationController
   # DELETE /workouts/1.json
   def destroy
     @workout.destroy
-    respond_to do |format|
-      format.html { redirect_to workouts_url, notice: 'Workout was successfully destroyed.' }
-      format.json { head :no_content }
+    redirect_to root_path
+  end
+
+  def add_favorite_workout
+    if params[:workout_id].present?
+      #@workout = FavoriteWorkout.find(params[:workout_id])
+      Workout.favorite_workouts << @workout
     end
+    redirect_to root_path
+  end
+
+  def add_comment
+    @comment = params[:comment1]
+    comments << @comment
+    redirect_to @workout
   end
 
   private

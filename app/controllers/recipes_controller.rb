@@ -10,6 +10,7 @@ class RecipesController < ApplicationController
   # GET /recipes/1
   # GET /recipes/1.json
   def show
+    @ingredient = Ingredient.new
   end
 
   # GET /recipes/new
@@ -24,16 +25,12 @@ class RecipesController < ApplicationController
   # POST /recipes
   # POST /recipes.json
   def create
-    @recipe = Recipe.new(recipe_params)
+    @recipe = current_user.recipes.new(recipe_params)
 
-    respond_to do |format|
-      if @recipe.save
-        format.html { redirect_to @recipe, notice: 'Recipe was successfully created.' }
-        format.json { render :show, status: :created, location: @recipe }
-      else
-        format.html { render :new }
-        format.json { render json: @recipe.errors, status: :unprocessable_entity }
-      end
+    if @recipe.save
+      redirect_to @recipe
+    else
+      render :new
     end
   end
 
@@ -55,10 +52,7 @@ class RecipesController < ApplicationController
   # DELETE /recipes/1.json
   def destroy
     @recipe.destroy
-    respond_to do |format|
-      format.html { redirect_to recipes_url, notice: 'Recipe was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to root_path
   end
 
   private

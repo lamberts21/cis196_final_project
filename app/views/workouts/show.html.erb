@@ -1,19 +1,81 @@
+<%= render 'layouts/nav' %>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @workout.name %>
-</p>
+<div class="row justify-content-center">
+  <h3><strong><%= @workout.name %></strong></h3>
+</div>
 
-<p>
-  <strong>Comments state:</strong>
-  <%= @workout.comments_state %>
-</p>
+<div class="row justify-content-center">
+  <p>by <%=@workout.user.username %></p>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @workout.user %>
-</p>
+<div class="row justify-content-center">
+  <% if @workout.exercises.empty? %>
+    There are no exercises yet for this workout.</tr>
+  <% else %>
+    <div class="col-lg-5">
+  <table class="table table-light">
+    <thead class="table-dark bg-primary">
+      <tr>
+        <th scope="col">Exercise Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Time (minutes)</th>
+      </tr>
+    </thead>
 
-<%= link_to 'Edit', edit_workout_path(@workout) %> |
-<%= link_to 'Back', workouts_path %>
+    <tbody>
+      <% if @workout.exercises.empty? %>
+        <tr>There are no exercises yet for this workout.</tr>
+      <% end %>
+      <% @workout.exercises.each do |exercise| %>
+        <tr>
+          <td><%= exercise.name%></td>
+          <td><%= exercise.description%></td>
+          <td><%= exercise.time%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<% end %>
+</div>
+
+<div class="row justify-content-center">
+  <% if current_user.username == @workout.user.username %>
+    <h3><strong>Add an exercise to this workout!</strong></h3>
+  <% end %>
+</div>
+
+<div class="row justify-content-center">
+  <% if current_user.username == @workout.user.username %>
+    <%= render '/exercises/form', exercise: @exercise, workout: @workout%>
+  <% end %>
+</div>
+
+
+<% if current_user.username != @workout.user.username %>
+  <% @action = '/workouts/' + @workout.id.to_s + 'add_comment' %>
+  <form action = '/workouts/' + @workout.id.to_s + 'add_comment' >
+  <div class="row justify-content-center">
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1">Add a comment: </label>
+      <input type="text" name="comment1">
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="form-group row">
+      <input type="submit"/>
+    </div>
+  </div>
+</form>
+<% end %>
+
+
+<div class="row justify-content-center">
+  <% if current_user.username == @workout.user.username %>
+    <%= link_to 'Edit', edit_workout_path(@workout) %> |
+  <%end%>
+  <%= link_to 'Back', root_path %>
+</div>

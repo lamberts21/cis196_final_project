@@ -1,37 +1,21 @@
-<%= form_with(model: exercise, local: true) do |form| %>
-  <% if exercise.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
-
-      <ul>
-      <% exercise.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_with model: [workout, exercise] do |form| %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label :Exercise_Name %>
     <%= form.text_field :name, id: :exercise_name %>
   </div>
 
   <div class="field">
-    <%= form.label :description %>
+    <%= form.label :Description %>
     <%= form.text_area :description, id: :exercise_description %>
   </div>
 
   <div class="field">
-    <%= form.label :time %>
+    <%= form.label :Time_In_Minutes %>
     <%= form.text_field :time, id: :exercise_time %>
   </div>
 
-  <div class="field">
-    <%= form.label :workout_id %>
-    <%= form.text_field :workout_id, id: :exercise_workout_id %>
-  </div>
-
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit :Add %>
   </div>
 <% end %>

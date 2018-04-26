@@ -1,0 +1,90 @@
+<%= render 'layouts/nav' %>
+<% if logged_in? %>
+  <div class="row">
+    <div class="col-lg-6">
+      <h4>Workouts</h4>
+      <table class="table table-light">
+        <thead class="table-dark bg-primary">
+          <tr>
+            <th scope="col">Created By</th>
+            <th scope="col">Workout Name</th>
+            <th scope="col">Get Info</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Save workout?</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if Workout.all.empty? %>
+            <td>No one has posted a workout yet. Be the first to post a workout!</td>
+          <% end %>
+          <% Workout.all.each do |workout| %>
+            <tr>
+              <td><%= workout.user.username%></td>
+              <td><%= workout.name%></td>
+              <td><%= link_to "View Full Workout", workout %></td>
+              <% if current_user.username == workout.user.username %>
+                 <td><%= link_to "Edit", edit_workout_path(workout) %></td>
+                 <td><%= link_to "Delete", '/workouts/' + workout.id.to_s, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <% else %>
+                <td></td>
+                <td></td>
+                <td><%= link_to 'Favorite', 'users/' + current_user.id.to_s + '/favorite_workout', method: :post%></td>
+              <%end%>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-lg-6">
+      <h4>Recipes</h4>
+      <table class="table table-light">
+        <thead class="table-dark bg-danger">
+          <tr>
+            <th scope="col">Created By</th>
+            <th scope="col">Recipe Name</th>
+            <th scope="col">Get Info</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Save recipe?</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if Recipe.all.empty? %>
+            <td>No one has posted a recipe yet. Be the first to post a recipe!</td>
+          <% end %>
+          <% Recipe.all.each do |recipe| %>
+            <tr>
+              <td><%= recipe.user.username%></td>
+              <td><%= recipe.name%></td>
+              <td><%= link_to "View Full Recipe", recipe %></td>
+              <% if current_user.username == recipe.user.username %>
+                 <td><%= link_to "Edit", edit_recipe_path(recipe) %></td>
+                 <td><%= link_to "Delete", '/recipes/' + recipe.id.to_s, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <% else %>
+                <td></td>
+                <td></td>
+                <td><%= link_to 'Favorite', 'users/' + current_user.id.to_s + '/favorite_recipe', method: :post%></td>
+              <%end%>
+
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+
+<% else %>
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <h1>Welcome to Penn Wellness!</h1>
+      <p>Sign up or log in to get started!</p>
+    </div>
+  </div>
+<% end %>

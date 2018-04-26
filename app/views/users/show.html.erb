@@ -1,24 +1,91 @@
+<%= render 'layouts/nav' %>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>First name:</strong>
-  <%= @user.first_name %>
-</p>
+<div class="row justify-content-center">
+  <h1>Your User Info:</h1>
+</div>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @user.last_name %>
-</p>
+<div class="row justify-content-center">
+  <p>
+    <strong>First name:</strong>
+    <%= @user.first_name %>
+  </p>
+</div>
 
-<p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
+<div class="row justify-content-center">
+  <p>
+    <strong>Last name:</strong>
+    <%= @user.last_name %>
+  </p>
+</div>
 
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
+<div class="row justify-content-center">
+  <p>
+    <strong>Username:</strong>
+    <%= @user.username %>
+  </p>
+</div>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<div class="row justify-content-center">
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+  <%= link_to 'Back', root_path %>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+      <h4>Your Workouts</h4>
+      <table class="table table-light">
+        <thead class="table-dark bg-primary">
+          <tr>
+            <th scope="col">Workout Name</th>
+            <th scope="col">Get Info</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if current_user.workouts.empty? %>
+            <td>Your workouts are empty. Post a workout by selecting "New Workout" in the top right corner of the menu!!</td>
+          <% end %>
+          <% current_user.workouts.each do |workout| %>
+            <tr>
+              <td><%= workout.name%></td>
+              <td><%= link_to "View Full Workout", workout %></td>
+              <td><%= link_to "Edit", edit_workout_path(workout) %></td>
+                 <td><%= link_to "Delete", '/workouts/' + workout.id.to_s, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-lg-6">
+      <h4>Your Recipes</h4>
+      <table class="table table-light">
+        <thead class="table-dark bg-danger">
+          <tr>
+            <th scope="col">Recipe Name</th>
+            <th scope="col">Get Info</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if current_user.recipes.empty? %>
+            <td>Your recipes are empty. Post a recipe by selecting "New Recipe" in the top right corner of the menu!</td>
+          <% end %>
+          <% current_user.recipes.each do |recipe| %>
+            <tr>
+              <td><%= recipe.name%></td>
+              <td><%= link_to "View Full Recipe", recipe %></td>
+              <td><%= link_to "Edit", edit_recipe_path(recipe) %></td>
+                 <td><%= link_to "Delete", '/recipes/' + recipe.id.to_s, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>

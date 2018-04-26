@@ -1,14 +1,55 @@
+<%= render 'layouts/nav' %>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @recipe.name %>
-</p>
+<div class="row justify-content-center">
+  <h3><strong><%= @recipe.name %></strong></h3>
+</div>
 
-<p>
-  <strong>Instructions:</strong>
-  <%= @recipe.instructions %>
-</p>
+<div class="row justify-content-center">
+  <p>by <%=@recipe.user.username %></p>
+</div>
 
-<%= link_to 'Edit', edit_recipe_path(@recipe) %> |
-<%= link_to 'Back', recipes_path %>
+<div class="row justify-content-center">
+  <% if @recipe.ingredients.empty? %>
+    There are no ingredients yet for this recipe.</tr>
+  <% else %>
+    <div class="col-lg-5">
+  <table class="table table-light">
+    <thead class="table-dark bg-primary">
+      <tr>
+        <th scope="col">Ingredient Name</th>
+        <th scope="col">Amount</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @recipe.ingredients.each do |ingredient| %>
+        <tr>
+          <td><%= ingredient.name%></td>
+          <td><%= ingredient.amount%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<% end %>
+</div>
+
+<div class="row justify-content-center">
+  <% if current_user.username == @recipe.user.username %>
+    <%= render '/ingredients/form', ingredient: @ingredient, recipe: @recipe%>
+  <% end %>
+</div>
+
+<div class="row justify-content-center">
+  <h4>Instructions: </h4>
+  <p><%= @recipe.instructions %></p>
+</div>
+
+<div class="row justify-content-center">
+  <%if current_user.username == @recipe.user.username%>
+    <%= link_to 'Edit', edit_recipe_path(@recipe) %> |
+  <%end%>
+    <%= link_to 'Home', root_path %>
+</div>

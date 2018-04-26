@@ -1,40 +1,32 @@
 class IngredientsController < ApplicationController
-  before_action :set_ingredient, only: [:show, :edit, :update, :destroy]
+  before_action :set_ingredient, except: :create
+  before_action :set_recipe
 
   # GET /ingredients
   # GET /ingredients.json
-  def index
-    @ingredients = Ingredient.all
-  end
+  #def index
+   # @ingredients = Ingredient.all
+  #end
 
   # GET /ingredients/1
   # GET /ingredients/1.json
-  def show
-  end
+  #def show
+  #end
 
   # GET /ingredients/new
-  def new
-    @ingredient = Ingredient.new
-  end
+  #def new
+    #@ingredient = Ingredient.new
+  #end
 
   # GET /ingredients/1/edit
-  def edit
-  end
+  #def edit
+  #end
 
   # POST /ingredients
   # POST /ingredients.json
   def create
-    @ingredient = Ingredient.new(ingredient_params)
-
-    respond_to do |format|
-      if @ingredient.save
-        format.html { redirect_to @ingredient, notice: 'Ingredient was successfully created.' }
-        format.json { render :show, status: :created, location: @ingredient }
-      else
-        format.html { render :new }
-        format.json { render json: @ingredient.errors, status: :unprocessable_entity }
-      end
-    end
+    @recipe.ingredients.create(ingredient_params)
+    redirect_to @recipe
   end
 
   # PATCH/PUT /ingredients/1
@@ -55,13 +47,15 @@ class IngredientsController < ApplicationController
   # DELETE /ingredients/1.json
   def destroy
     @ingredient.destroy
-    respond_to do |format|
-      format.html { redirect_to ingredients_url, notice: 'Ingredient was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to @recipe
   end
 
   private
+
+    def set_recipe
+      @recipe = Recipe.find(params[:recipe_id])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_ingredient
       @ingredient = Ingredient.find(params[:id])

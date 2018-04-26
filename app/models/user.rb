@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+
+  include BCrypt
   has_many :recipes
   has_many :workouts
   has_many :favorite_recipes, dependent: :destroy
@@ -12,11 +14,11 @@ class User < ApplicationRecord
   validate :valid_last_name
 
   def valid_first_name
-    errors.add(:first_name, 'must be capitalized') if !first_name.nil? && first_name != first_name.capitalize
+    errors.add(:first_name, 'must not be empty or nil') if first_name.nil? || first_name.empty?
   end
 
   def valid_last_name
-    errors.add(:last_name, 'must be capitalized') if !last_name.nil? && last_name != last_name.capitalize
+    errors.add(:last_name, 'must not be empty or nil') if last_name.nil? || last_name.empty?
   end
 
   def full_name
