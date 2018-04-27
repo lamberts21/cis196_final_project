@@ -22,10 +22,6 @@ class User < ApplicationRecord
     errors.add(:last_name, 'must not be empty or nil') if last_name.nil? || last_name.empty?
   end
 
-  def full_name
-    first_name + ' ' + last_name
-  end
-
   def password
     @password ||= Password.new(password_hash) unless password_hash.nil?
   end
