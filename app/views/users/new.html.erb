@@ -1,7 +1,13 @@
 <%= render 'layouts/nav' %>
 
-<h1>New User</h1>
+<div class="row justify-content-center">
+  <h2>Sign up by filling in the fields below!</h2>
+</div>
 
-<%= render 'form', user: @user %>
+<div class="row justify-content-center">
+  <%= render 'form', user: @user %>
+</div>
 
-<%= link_to 'Back', root_path %>
+<div class="row justify-content-center">
+  <%= link_to 'Back', root_path %>
+</div>

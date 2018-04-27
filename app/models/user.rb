@@ -1,8 +1,9 @@
 class User < ApplicationRecord
-
   include BCrypt
   has_many :recipes
   has_many :workouts
+  has_many :comments, dependent: :destroy
+  has_many :recipe_comments, dependent: :destroy
   has_many :favorite_recipes, dependent: :destroy
   has_many :favorite_workouts, dependent: :destroy
 
@@ -33,5 +34,4 @@ class User < ApplicationRecord
     @password = Password.create(new_password)
     self.password_hash = @password
   end
-
 end

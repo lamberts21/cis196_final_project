@@ -27,8 +27,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       redirect_to login_path
-      #format.html { redirect_to @user, notice: 'User was successfully created.' }
-      #format.json { render :show, status: :created, location: @user }
+      # format.html { redirect_to @user, notice: 'User was successfully created.' }
+      # format.json { render :show, status: :created, location: @user }
     else
       render :new
     end
@@ -58,31 +58,27 @@ class UsersController < ApplicationController
     end
   end
 
+  # attempt to implement favorite_workouts but unused
   def add_favorite_workout
-    if params[:workout_id].present?
-      #@workout = FavoriteWorkout.find(params[:workout_id])
-      @user.favorite_workouts << @workout
-    end
+    @user.favorite_workouts << @workout if params[:workout_id].present?
     redirect_to root_path
   end
 
-
+  # attempt to implement favorite_recipes but unused
   def add_favorite_recipe
-    if params[:recipe_id].present?
-      #@workout = FavoriteWorkout.find(params[:workout_id])
-      @user.favorite_recipes << @recipe
-    end
+    @user.favorite_recipes << @recipe if params[:recipe_id].present?
     redirect_to root_path
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:first_name, :last_name, :username, :password)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :username, :password)
+  end
 end

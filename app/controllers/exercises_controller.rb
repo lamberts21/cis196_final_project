@@ -2,28 +2,6 @@ class ExercisesController < ApplicationController
   before_action :set_exercise, except: :create
   before_action :set_workout
 
-  # GET /exercises
-  # GET /exercises.json
-  #def index
-    #@exercises = Exercise.all
- # end
-
-  # GET /exercises/1
-  # GET /exercises/1.json
-  #def show
-  #end
-
-  # GET /exercises/new
-  #def new
-    #@exercise = Exercise.new
-  #end
-
-  # GET /exercises/1/edit
-  #def edit
-  #end
-
-  # POST /exercises
-  # POST /exercises.json
   def create
     @workout.exercises.create(exercise_params)
     redirect_to @workout
@@ -52,17 +30,17 @@ class ExercisesController < ApplicationController
 
   private
 
-    def set_workout
-      @workout = Workout.find(params[:workout_id])
-    end
+  def set_workout
+    @workout = Workout.find(params[:workout_id])
+  end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_exercise
-      @exercise = Exercise.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_exercise
+    @exercise = Exercise.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def exercise_params
-      params.require(:exercise).permit(:name, :description, :time, :workout_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def exercise_params
+    params.require(:exercise).permit(:name, :description, :time, :workout_id)
+  end
 end

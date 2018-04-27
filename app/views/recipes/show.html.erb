@@ -47,6 +47,21 @@
   <p><%= @recipe.instructions %></p>
 </div>
 
+<% if @recipe.comments_state %>
+  <div class="row justify-content-center">
+    <% @recipe.recipe_comments.each do |comment| %>
+      <p>hello!</p>
+      <tbody>
+        <td><%= comment.user.username%></td>
+        <td><%= comment.field%></td>
+      </tbody>
+    <% end %>
+  </div>
+  <div class="row justify-content-center">
+    <%= render '/recipe_comments/form', recipe_comment: @recipe_comment, recipe: @recipe%>
+  </div>
+<% end %>
+
 <div class="row justify-content-center">
   <%if current_user.username == @recipe.user.username%>
     <%= link_to 'Edit', edit_recipe_path(@recipe) %> |

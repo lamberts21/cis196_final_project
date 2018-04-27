@@ -1,8 +1,15 @@
 <%= render 'layouts/nav' %>
 
-<h1>Editing Workout</h1>
+<div class="row justify-content-center">
+  <h1>Edit Workout</h1>
+</div>
 
-<%= render 'form', workout: @workout %>
+<div class="row justify-content-center">
+  <%= render 'form', workout: @workout %>
+</div>
 
-<%= link_to 'Show', @workout %> |
-<%= link_to 'Back', workouts_path %>
+<div class="row justify-content-center">
+  <%= link_to 'Show', @workout %> |
+  <%= link_to 'Add Exercises', @workout %> |
+  <%= link_to 'Home', root_path %>
+</div>

@@ -1,0 +1,11 @@
+<%= form_with model: [comment, workout] do |form| %>
+
+  <div class="field">
+    <%= form.label :Add_a_comment! %>
+    <%= form.text_area :field, id: :comment_field %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit :Add%>
+  </div>
+<% end %>

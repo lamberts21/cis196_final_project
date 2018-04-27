@@ -58,28 +58,21 @@ class WorkoutsController < ApplicationController
     redirect_to root_path
   end
 
+  # attempt at implementing favorite_workouts but not used
   def add_favorite_workout
-    if params[:workout_id].present?
-      #@workout = FavoriteWorkout.find(params[:workout_id])
-      Workout.favorite_workouts << @workout
-    end
+    Workout.favorite_workouts << @workout if params[:workout_id].present?
     redirect_to root_path
   end
 
-  def add_comment
-    @comment = params[:comment1]
-    comments << @comment
-    redirect_to @workout
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_workout
+    @workout = Workout.find(params[:id])
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_workout
-      @workout = Workout.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def workout_params
-      params.require(:workout).permit(:name, :comments_state, :user_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def workout_params
+    params.require(:workout).permit(:name, :comments_state, :user_id)
+  end
 end

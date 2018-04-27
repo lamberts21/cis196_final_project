@@ -5,17 +5,17 @@ class WorkoutsControllerTest < ActionDispatch::IntegrationTest
     @workout = workouts(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get workouts_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_workout_url
     assert_response :success
   end
 
-  test "should create workout" do
+  test 'should create workout' do
     assert_difference('Workout.count') do
       post workouts_url, params: { workout: { comments_state: @workout.comments_state, name: @workout.name, user_id: @workout.user_id } }
     end
@@ -23,22 +23,22 @@ class WorkoutsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to workout_url(Workout.last)
   end
 
-  test "should show workout" do
+  test 'should show workout' do
     get workout_url(@workout)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_workout_url(@workout)
     assert_response :success
   end
 
-  test "should update workout" do
+  test 'should update workout' do
     patch workout_url(@workout), params: { workout: { comments_state: @workout.comments_state, name: @workout.name, user_id: @workout.user_id } }
     assert_redirected_to workout_url(@workout)
   end
 
-  test "should destroy workout" do
+  test 'should destroy workout' do
     assert_difference('Workout.count', -1) do
       delete workout_url(@workout)
     end

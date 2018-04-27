@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
+  resources :recipe_comments
+  resources :comments
   root 'welcome#index'
   resources :workouts do
     resources :exercises, only: [:create, :destroy]
   end
+   resources :workouts do
+    resources :comments, only: [:create, :destroy]
+  end
   resources :recipes do
     resources :ingredients, only: [:create, :destroy]
+  end
+  resources :recipes do
+    resources :recipe_comments, only: [:create, :destroy]
   end
   resources :users
 

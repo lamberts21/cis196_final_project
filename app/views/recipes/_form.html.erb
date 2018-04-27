@@ -21,6 +21,11 @@
     <%= form.text_field :instructions, id: :recipe_instructions %>
   </div>
 
+  <div class="field">
+    <%= form.label :Other_users_may_comment_on_this_recipe! %>
+    <%= form.check_box :comments_state, id: :recipe_comments_state %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

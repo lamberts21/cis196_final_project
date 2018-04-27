@@ -25,9 +25,6 @@
     </thead>
 
     <tbody>
-      <% if @workout.exercises.empty? %>
-        <tr>There are no exercises yet for this workout.</tr>
-      <% end %>
       <% @workout.exercises.each do |exercise| %>
         <tr>
           <td><%= exercise.name%></td>
@@ -54,22 +51,19 @@
 </div>
 
 
-<% if current_user.username != @workout.user.username %>
-  <% @action = '/workouts/' + @workout.id.to_s + 'add_comment' %>
-  <form action = '/workouts/' + @workout.id.to_s + 'add_comment' >
+<% if @workout.comments_state %>
   <div class="row justify-content-center">
-    <div class="form-group">
-      <label for="exampleFormControlTextarea1">Add a comment: </label>
-      <input type="text" name="comment1">
-    </div>
+    <% @workout.comments.each do |comment| %>
+      <p>hello!</p>
+      <tbody>
+        <td><%= comment.user.username%></td>
+        <td><%= comment.field%></td>
+      </tbody>
+    <% end %>
   </div>
-
   <div class="row justify-content-center">
-    <div class="form-group row">
-      <input type="submit"/>
-    </div>
+    <%= render '/comments/form', comment: @comment, workout: @workout%>
   </div>
-</form>
 <% end %>
 
 
@@ -77,5 +71,5 @@
   <% if current_user.username == @workout.user.username %>
     <%= link_to 'Edit', edit_workout_path(@workout) %> |
   <%end%>
-  <%= link_to 'Back', root_path %>
+  <%= link_to 'Home', root_path %>
 </div>
